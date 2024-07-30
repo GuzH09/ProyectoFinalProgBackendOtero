@@ -66,7 +66,7 @@ app.use('/api/sessions', sessionsRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 const httpServer = app.listen(PORT, () => { console.log(`Servidor activo en http://localhost:${PORT}`) })
 
 const io = new Server(httpServer, {
