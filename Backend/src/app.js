@@ -44,7 +44,7 @@ const specs = swaggerJsdoc(swaggerOptions)
 
 app.use(addLogger)
 app.use(express.json())
-app.use(cors({ credentials: true, origin: 'https://proyecto-final-prog-backend-otero.vercel.app/' }))
+app.use(cors({ credentials: true, origin: 'https://proyecto-final-prog-backend-otero.vercel.app' }))
 app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static(`${__dirname}/../../public`))
 app.use(cookieParser())
