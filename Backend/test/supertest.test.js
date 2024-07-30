@@ -12,10 +12,10 @@ const requester = supertest('http://localhost:8080')
 // Debería usar una coleccion de prueba para los tests pero por simplicidad estoy usando la original
 
 describe('Test de integración de Login, Register y Logout', function () {
-  before(function () {})
+  before(function () { })
   beforeEach(function () { this.timeout = 3000 })
-  after(function () {})
-  afterEach(function () {})
+  after(function () { })
+  afterEach(function () { })
 
   const testUser = {
     first_name: 'Testing',
