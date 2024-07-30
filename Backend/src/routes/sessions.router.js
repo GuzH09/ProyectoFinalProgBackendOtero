@@ -48,12 +48,12 @@ sessionsRouter.get('/github', passport.authenticate('github', { scope: ['user:em
 // API Login Callback with Github
 sessionsRouter.get('/githubcallback', passport.authenticate('github', {
   session: false,
-  failureRedirect: 'http://localhost:3000/login'
+  failureRedirect: 'https://proyecto-final-prog-backend-otero.vercel.app/login'
 }), (req, res) => {
   const token = jwt.sign(req.user, process.env.SECRET_OR_KEY, { expiresIn: '1h' })
   res.cookie('auth', token, { maxAge: 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: 'None' })
   req.logger.info({ message: 'Successful Callback' })
-  return res.redirect('http://localhost:3000/home')
+  return res.redirect('https://proyecto-final-prog-backend-otero.vercel.app/home')
 })
 
 // API Current
