@@ -51,7 +51,7 @@ sessionsRouter.get('/githubcallback', passport.authenticate('github', {
   failureRedirect: 'http://localhost:3000/login'
 }), (req, res) => {
   const token = jwt.sign(req.user, process.env.SECRET_OR_KEY, { expiresIn: '1h' })
-  res.cookie('auth', token, { maxAge: 60 * 60 * 1000, httpOnly: true })
+  res.cookie('auth', token, { maxAge: 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: 'None' })
   req.logger.info({ message: 'Successful Callback' })
   return res.redirect('http://localhost:3000/home')
 })
@@ -67,7 +67,11 @@ sessionsRouter.get('/current', passport.authenticate('jwt', { session: false }),
 
 // API Logout
 sessionsRouter.get('/logout', async (req, res) => {
-  res.clearCookie('auth')
+  res.clearCookie('auth', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None'
+  })
   req.logger.info({ message: 'Successful Logout' })
   res.status(200).send({
     status: 'success',
