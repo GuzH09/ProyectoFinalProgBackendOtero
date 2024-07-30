@@ -30,7 +30,7 @@ sessionsRouter.post('/login', async (req, res) => {
     req.logger.warning(result)
     return res.status(400).send(result)
   } else {
-    res.cookie('auth', result, { maxAge: 60 * 60 * 1000, httpOnly: true, secure: true })
+    res.cookie('auth', result, { maxAge: 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: 'None' })
     req.logger.info(result)
     return res.status(200).send(result)
   }
