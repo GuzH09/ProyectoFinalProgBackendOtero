@@ -17,7 +17,7 @@ const Profile = () => {
       if (response.ok) {
         // Handle the response from the backend
         setIsAuthenticated(false)
-        navigate('/home')
+        navigate('/')
       } else {
         console.error('Request failed with status', response.status)
       }
