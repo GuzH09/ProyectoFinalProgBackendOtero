@@ -12,7 +12,7 @@ const LoginContainer = () => {
     e.preventDefault()
 
     try {
-      const response = await fetch('http://localhost:8080/api/sessions/login', {
+      const response = await fetch('https://proyectofinalprogbackendotero.onrender.com/api/sessions/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ const LoginContainer = () => {
   }
 
   const handleButtonClick = async () => {
-    window.location.href = 'http://localhost:8080/api/sessions/github'
+    window.location.href = 'https://proyectofinalprogbackendotero.onrender.com/api/sessions/github'
   }
 
   useEffect(() => {

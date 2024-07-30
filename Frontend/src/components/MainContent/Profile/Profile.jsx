@@ -9,7 +9,7 @@ const Profile = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/sessions/logout', {
+      const response = await fetch('https://proyectofinalprogbackendotero.onrender.com/api/sessions/logout', {
         method: 'GET',
         credentials: 'include'
       })

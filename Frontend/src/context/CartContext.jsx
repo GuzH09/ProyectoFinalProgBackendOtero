@@ -14,7 +14,7 @@ export const CartProvider = ({ children }) => {
 
   const fetchCartFromUser = useCallback(async () => {
     try {
-      const responseCart = await fetch(`http://localhost:8080/api/carts/${profile.cart[0]}`, {
+      const responseCart = await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/carts/${profile.cart[0]}`, {
         credentials: 'include'
       })
 
@@ -22,7 +22,7 @@ export const CartProvider = ({ children }) => {
         const dataCart = await responseCart.json()
         // Process the data to include full URLs for thumbnails
         const processedData = dataCart.carts.products.map((product) => {
-          const baseURL = 'http://localhost:8080/static/img/'
+          const baseURL = 'https://proyectofinalprogbackendotero.onrender.com/static/img/'
           return {
             ...product,
             product: {
@@ -47,7 +47,7 @@ export const CartProvider = ({ children }) => {
 
   const handleOnRemove = async (id) => {
     try {
-      await fetch(`http://localhost:8080/api/carts/${profile.cart[0]}/product/${id}/delete`, {
+      await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/carts/${profile.cart[0]}/product/${id}/delete`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ export const CartProvider = ({ children }) => {
 
   const handleOnAdd = async (quantity, id, title) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/carts/${profile.cart[0]}/product/${id}`, {
+      const response = await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/carts/${profile.cart[0]}/product/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ export const CartProvider = ({ children }) => {
       })
 
       if (response.ok) {
-        const responseQuantity = await fetch(`http://localhost:8080/api/carts/${profile.cart[0]}/product/${id}`, {
+        const responseQuantity = await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/carts/${profile.cart[0]}/product/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ export const CartProvider = ({ children }) => {
 
   const handleOnCheckout = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/carts/${profile.cart[0]}/purchase/`, {
+      const response = await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/carts/${profile.cart[0]}/purchase/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

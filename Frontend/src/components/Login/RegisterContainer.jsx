@@ -15,7 +15,7 @@ const RegisterContainer = () => {
     e.preventDefault()
 
     try {
-      const response = await fetch('http://localhost:8080/api/sessions/register', {
+      const response = await fetch('https://proyectofinalprogbackendotero.onrender.com/api/sessions/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

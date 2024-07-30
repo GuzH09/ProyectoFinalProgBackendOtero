@@ -30,7 +30,6 @@ const uri = process.env.MONGO_URI
 mongoose.connect(uri)
 
 // Middlewares
-app.use(addLogger)
 const swaggerOptions = {
   definition: {
     openapi: '3.0.1',
@@ -42,8 +41,8 @@ const swaggerOptions = {
   apis: [`${__dirname}/../docs/**/*.yaml`]
 }
 const specs = swaggerJsdoc(swaggerOptions)
-app.use('/api/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
+app.use(addLogger)
 app.use(express.json())
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.urlencoded({ extended: true }))
@@ -54,6 +53,7 @@ initializatePassport()
 app.use(passport.initialize())
 
 // Routers
+app.use('/api/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 app.use('/api/users', usersRouter)
 app.use('/api/sessions', sessionsRouter)
 app.use('/api/products', productsRouter)

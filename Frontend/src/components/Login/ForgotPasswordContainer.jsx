@@ -11,7 +11,7 @@ const ForgotPasswordContainer = () => {
     e.preventDefault()
 
     try {
-      const response = await fetch('http://localhost:8080/api/sessions/forgot-password', {
+      const response = await fetch('https://proyectofinalprogbackendotero.onrender.com/api/sessions/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
