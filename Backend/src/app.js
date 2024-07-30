@@ -44,7 +44,7 @@ const specs = swaggerJsdoc(swaggerOptions)
 
 app.use(addLogger)
 app.use(express.json())
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+app.use(cors({ credentials: true, origin: 'https://proyecto-final-prog-backend-otero.vercel.app/' }))
 app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static(`${__dirname}/../../public`))
 app.use(cookieParser())
@@ -64,7 +64,7 @@ const httpServer = app.listen(PORT, () => { console.log(`Servidor activo en http
 
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://proyecto-final-prog-backend-otero.vercel.app/',
     credentials: true,
     methods: ['GET', 'POST']
   }
