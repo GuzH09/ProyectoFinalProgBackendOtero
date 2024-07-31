@@ -79,19 +79,6 @@ productsRouter.get('/', async (req, res) => {
   }
 })
 
-// Get Product By Id
-productsRouter.get('/:pid', async (req, res) => {
-  const productId = req.params.pid
-  const products = await PM.getProductById(productId)
-  if (products.error) {
-    req.logger.warning({ products })
-    res.status(400).send(products)
-  } else {
-    req.logger.info({ message: 'Get product by id', products })
-    res.status(200).send({ ...products, _id: products._id.toString() })
-  }
-})
-
 // Create New Product
 productsRouter.post('/', passport.authenticate('jwt', { session: false }), roleauth(['premium', 'admin']), async (req, res, next) => {
   uploader.array('thumbnails')(req, res, (err) => {
@@ -128,6 +115,19 @@ productsRouter.post('/', passport.authenticate('jwt', { session: false }), rolea
   } catch (e) {
     req.logger.warning({ error: e.message })
     res.status(400).send({ error: e.message })
+  }
+})
+
+// Get Product By Id
+productsRouter.get('/:pid', async (req, res) => {
+  const productId = req.params.pid
+  const products = await PM.getProductById(productId)
+  if (products.error) {
+    req.logger.warning({ products })
+    res.status(400).send(products)
+  } else {
+    req.logger.info({ message: 'Get product by id', products })
+    res.status(200).send({ ...products, _id: products._id.toString() })
   }
 })
 

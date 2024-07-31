@@ -66,7 +66,7 @@ sessionsRouter.get('/current', passport.authenticate('jwt', { session: false }),
 })
 
 // API Logout
-sessionsRouter.get('/logout', async (req, res) => {
+sessionsRouter.get('/logout', passport.authenticate('jwt', { session: false }), async (req, res) => {
   res.clearCookie('auth', {
     httpOnly: true,
     secure: true,

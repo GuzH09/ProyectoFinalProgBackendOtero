@@ -36,39 +36,6 @@ cartsRouter.get('/:cid', passport.authenticate('jwt', { session: false }), async
   }
 })
 
-// Add Product to Cart
-cartsRouter.post('/:cid/product/:pid', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  const cartId = req.params.cid
-  const productId = req.params.pid
-  const product = await PM.getProductById(productId)
-  // Product Error
-  if (product.error) {
-    req.logger.warning({ product })
-    return res.status(400).send(product)
-  }
-  // Product Not Found
-  if (product === null) {
-    req.logger.warning({ error: `Product with id ${productId} not found.` })
-    return res.status(400).send({ error: `Product with id ${productId} not found.` })
-  }
-  // Check if the user is a premium user and the owner of the product
-  if (req.user.role === 'premium' && product.owner === req.user.email) {
-    req.logger.warning({ error: 'Premium users cannot add their own products to the cart.' })
-    return res.status(400).send({ error: 'Premium users cannot add their own products to the cart.' })
-  }
-
-  req.logger.info({ message: 'Add Product to Cart Endpoint - Get Cart By Id', product })
-  // Add Product to Cart Error
-  const result = await CM.AddProductToCart(cartId, productId)
-  if (result.success) {
-    req.logger.info({ message: 'Add Product to Cart Endpoint', result })
-    res.status(201).send(result)
-  } else {
-    req.logger.warning({ result })
-    res.status(400).send({ result })
-  }
-})
-
 // Delete All Products From Cart
 cartsRouter.delete('/:cid', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const cartId = req.params.cid
@@ -78,20 +45,6 @@ cartsRouter.delete('/:cid', passport.authenticate('jwt', { session: false }), as
     res.status(400).send(carts)
   } else {
     req.logger.info({ message: 'Delete All Products From Cart Endpoint', carts })
-    res.status(200).send({ carts })
-  }
-})
-
-// Delete Single Product From Cart
-cartsRouter.post('/:cid/product/:pid/delete', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  const cartId = req.params.cid
-  const productId = req.params.pid
-  const carts = await CM.deleteProductFromCart(cartId, productId)
-  if (carts.error) {
-    req.logger.warning({ carts })
-    res.status(400).send(carts)
-  } else {
-    req.logger.info({ message: 'Delete Single Product From Cart Endpoint', carts })
     res.status(200).send({ carts })
   }
 })
@@ -117,21 +70,6 @@ cartsRouter.put('/:cid', passport.authenticate('jwt', { session: false }), async
     res.status(400).send(carts)
   } else {
     req.logger.info({ message: 'PUT Single Cart With Products Object Endpoint', carts })
-    res.status(200).send({ carts })
-  }
-})
-
-// PUT Quantity of Product From Cart
-cartsRouter.put('/:cid/product/:pid', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  const { quantity } = req.body
-  const cartId = req.params.cid
-  const productId = req.params.pid
-  const carts = await CM.updateProductQuantityFromCart(cartId, productId, quantity)
-  if (carts.error) {
-    req.logger.warning({ carts })
-    res.status(400).send(carts)
-  } else {
-    req.logger.info({ message: 'PUT Quantity of Product From Cart Endpoint', carts })
     res.status(200).send({ carts })
   }
 })
@@ -186,6 +124,68 @@ cartsRouter.post('/:cid/purchase', passport.authenticate('jwt', { session: false
     // res.redirect(`/carts/${cartId}?ticket=${req.ticket._id}`);
   } else {
     res.send('We tried.')
+  }
+})
+
+// Add Product to Cart
+cartsRouter.post('/:cid/product/:pid', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const cartId = req.params.cid
+  const productId = req.params.pid
+  const product = await PM.getProductById(productId)
+  // Product Error
+  if (product.error) {
+    req.logger.warning({ product })
+    return res.status(400).send(product)
+  }
+  // Product Not Found
+  if (product === null) {
+    req.logger.warning({ error: `Product with id ${productId} not found.` })
+    return res.status(400).send({ error: `Product with id ${productId} not found.` })
+  }
+  // Check if the user is a premium user and the owner of the product
+  if (req.user.role === 'premium' && product.owner === req.user.email) {
+    req.logger.warning({ error: 'Premium users cannot add their own products to the cart.' })
+    return res.status(400).send({ error: 'Premium users cannot add their own products to the cart.' })
+  }
+
+  req.logger.info({ message: 'Add Product to Cart Endpoint - Get Cart By Id', product })
+  // Add Product to Cart Error
+  const result = await CM.AddProductToCart(cartId, productId)
+  if (result.success) {
+    req.logger.info({ message: 'Add Product to Cart Endpoint', result })
+    res.status(201).send(result)
+  } else {
+    req.logger.warning({ result })
+    res.status(400).send({ result })
+  }
+})
+
+// PUT Quantity of Product From Cart
+cartsRouter.put('/:cid/product/:pid', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const { quantity } = req.body
+  const cartId = req.params.cid
+  const productId = req.params.pid
+  const carts = await CM.updateProductQuantityFromCart(cartId, productId, quantity)
+  if (carts.error) {
+    req.logger.warning({ carts })
+    res.status(400).send(carts)
+  } else {
+    req.logger.info({ message: 'PUT Quantity of Product From Cart Endpoint', carts })
+    res.status(200).send({ carts })
+  }
+})
+
+// Delete Single Product From Cart
+cartsRouter.post('/:cid/product/:pid/delete', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const cartId = req.params.cid
+  const productId = req.params.pid
+  const carts = await CM.deleteProductFromCart(cartId, productId)
+  if (carts.error) {
+    req.logger.warning({ carts })
+    res.status(400).send(carts)
+  } else {
+    req.logger.info({ message: 'Delete Single Product From Cart Endpoint', carts })
+    res.status(200).send({ carts })
   }
 })
 
