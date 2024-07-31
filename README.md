@@ -11,8 +11,25 @@ Backend deployed on Render: https://proyectofinalprogbackendotero.onrender.com/
 
 Frontend deployed on Vercel: https://proyecto-final-prog-backend-otero.vercel.app/
 
+## Endpoints Links
+Products
+* [POST /api/products](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#post-apiproducts)
+* [GET /api/products](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#get-apiproducts)
+* [GET /api/products/{pid}](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#get-apiproductspid)
+* [PUT /api/products/{pid}](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#put-apiproductspid)
+* [DELETE /api/products/{pid}](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#delete-apiproductspid)
+
+Carts
+* [POST /api/carts](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#post-apicarts)
+* [GET /api/carts/{cid}](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#get-apicartscid)
+* [PUT /api/carts/{cid}](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#put-apicartscid)
+* [DELETE /api/carts/{cid}](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#delete-apicartscid)
+* [POST /api/carts/{cid}/purchase](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#post-apicartscidpurchase)
+* [POST /api/carts/{cid}/product/{pid}](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#post-apicartscidproductpid)
+* [PUT /api/carts/{cid}/product/{pid}](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#put-apicartscidproductpid)
+* [DELETE /api/carts/{cid}/product/{pid}/delete](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#delete-apicartscidproductpiddelete)
+---
 ## Endpoints
-[GET /api/products](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#get-apiproducts)
 
 ### Products
 
