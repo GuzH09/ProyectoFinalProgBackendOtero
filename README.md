@@ -12,6 +12,7 @@ Backend deployed on Render: https://proyectofinalprogbackendotero.onrender.com/
 Frontend deployed on Vercel: https://proyecto-final-prog-backend-otero.vercel.app/
 
 ## Endpoints
+[GET /api/products](https://github.com/GuzH09/ProyectoFinalProgBackendOtero/tree/main?tab=readme-ov-file#get-apiproducts)
 
 ### Products
 
