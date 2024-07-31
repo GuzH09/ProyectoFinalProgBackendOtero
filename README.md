@@ -165,7 +165,6 @@ Carts
     * Content: application/json
     * Schema: JSON
       * "error": "string"
-
 ---
 ### Carts
 
