@@ -26,11 +26,11 @@ function MainContent () {
                             <Route path="/item/:itemId" element={<ItemDetailContainer />} />
                             <Route path="/cart" element={<Cart />} />
                             <Route path="/profile" element={<Profile />} />
-                            <Route path="/chat" element={<Chat />} />
                             <Route path="/checkout" element={<Checkout />} />
                         </Route>
 
                         <Route element={<ProtectedRoute roleNeeded={['admin', 'premium']} redirectTo="/" />}>
+                            <Route path="/chat" element={<Chat />} />
                             <Route path="/manager" element={<AdminManager />} />
                         </Route>
                     </Routes>
