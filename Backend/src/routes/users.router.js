@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import passport from 'passport'
 import UserController from '../controllers/UserController.js'
-// import CurrentUserDTO from '../DTOs/currentuser.dto.js'
 import { roleauth } from '../middlewares/role-authorization.js'
+import { foldervalidation } from '../middlewares/folder-validation.js'
 import { uploader } from '../utils/multerUtil.js'
 import fs from 'fs'
 import __dirname from '../utils/constantsUtil.js'
@@ -62,27 +62,7 @@ usersRouter.post('/premium/:uid', passport.authenticate('jwt', { session: false 
 })
 
 // POST Upload documents files
-usersRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
-  // Conseguir el usuario
-  // Validar que el usuario exista y
-  // ¿No deberia validar que el usuario loggeado es el usuario que se está pasando como parametro?
-  const user = await SessionService.getUser(req.params.uid)
-  if (user.error) {
-    req.logger.warning(user)
-    return res.status(400).send(user)
-  } else {
-    req.logger.info({ user })
-    req.userFound = user // Pasar el usuario encontrado al siguiente middleware
-    // Crea la carpeta para los archivos del usuario especifico si es que no existe
-    try {
-      await fs.promises.mkdir(`${__dirname}/../../public/documents/${user._id.toString()}`, { recursive: true })
-      await fs.promises.mkdir(`${__dirname}/../../public/img/profiles/${user._id.toString()}`, { recursive: true })
-    } catch (error) {
-      req.logger.warning({ error: `Error creating directory: ${error.message}` })
-    }
-  }
-  next()
-}, async (req, res, next) => {
+usersRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false }), foldervalidation(SessionService), async (req, res, next) => {
   // Subir los archivos con el multer
   uploader.fields([
     { name: 'profilePicture', maxCount: 1 },
