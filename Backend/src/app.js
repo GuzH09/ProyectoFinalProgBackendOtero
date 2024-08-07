@@ -64,7 +64,7 @@ const httpServer = app.listen(PORT, () => { console.log(`Servidor activo en http
 
 const io = new Server(httpServer, {
   cors: {
-    origin: 'https://proyecto-final-prog-backend-otero.vercel.app/',
+    origin: 'https://proyecto-final-prog-backend-otero.vercel.app',
     credentials: true,
     methods: ['GET', 'POST']
   }
