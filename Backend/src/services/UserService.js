@@ -87,4 +87,13 @@ export default class UserService {
       return { error: error.message }
     }
   }
+
+  async flagUserForDeletion (uid) {
+    try {
+      await userModel.updateOne({ _id: uid }, { deleteFlag: true })
+      return { success: `User ${uid} flagged for deletion.` }
+    } catch (error) {
+      return { error: error.message }
+    }
+  }
 }

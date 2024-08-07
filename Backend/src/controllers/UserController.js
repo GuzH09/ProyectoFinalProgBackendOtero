@@ -43,4 +43,8 @@ export default class UserController {
   async resetPassword (uid, password) {
     return this.userService.resetPassword(uid, password)
   }
+
+  async flagUserForDeletion (uid) {
+    return this.userService.flagUserForDeletion(uid)
+  }
 }

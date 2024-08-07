@@ -160,6 +160,7 @@ productsRouter.delete('/:pid', passport.authenticate('jwt', { session: false }),
     req.logger.warning({ result })
     res.status(400).send(result)
   }
+  // Añadir logica para que envie un email en caso de que el usuario al que pertenece el producto, sea un usuario premium
 })
 
 export default productsRouter

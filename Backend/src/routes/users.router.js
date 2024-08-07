@@ -6,9 +6,54 @@ import { foldervalidation } from '../middlewares/folder-validation.js'
 import { uploader } from '../utils/multerUtil.js'
 import fs from 'fs'
 import __dirname from '../utils/constantsUtil.js'
+import CurrentUserDTO from '../DTOs/currentuser.dto.js'
 
 const usersRouter = Router()
 const SessionService = new UserController()
+
+// GET All Users
+usersRouter.get('/', passport.authenticate('jwt', { session: false }), roleauth(['admin']), async (req, res) => {
+  const result = await SessionService.getAllUsers()
+  if (result.error) {
+    req.logger.warning(result)
+    return res.status(400).send(result)
+  } else {
+    const transformedUsers = result.map(user => new CurrentUserDTO(user))
+
+    req.logger.info({ status: 'success', payload: transformedUsers })
+    return res.status(200).send({ status: 'success', payload: transformedUsers })
+  }
+})
+
+// Flag for deletion all users that didnt connect since last two days
+usersRouter.delete('/', passport.authenticate('jwt', { session: false }), roleauth(['admin']), async (req, res) => {
+  const result = await SessionService.getAllUsers()
+
+  if (result.error) {
+    req.logger.warning(result)
+    return res.status(400).send(result)
+  } else {
+    // Current date and two days ago
+    const twoDaysAgo = Date.now() - (1000 * 60 * 60 * 24 * 2)
+
+    // Filter users who have not connected in the last two days
+    const usersToFlag = result.filter(user => {
+      const lastConnectionDate = new Date(user.last_connection).getTime()
+      return lastConnectionDate < twoDaysAgo
+    })
+
+    // Delete users who have not connected in the last two days
+    const flagResults = []
+    for (const userObj of usersToFlag) {
+      flagResults.push(await SessionService.flagUserForDeletion(userObj._id))
+    }
+
+    req.logger.info({ status: 'success', payload: flagResults })
+    return res.status(200).send({ status: 'success', payload: flagResults })
+
+    // Añadir la logica para enviar un mail al usuario
+  }
+})
 
 // GET User By ID
 usersRouter.get('/:uid', passport.authenticate('jwt', { session: false }), roleauth(['admin']), async (req, res) => {

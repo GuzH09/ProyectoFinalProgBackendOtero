@@ -61,6 +61,11 @@ const userSchema = mongoose.Schema({
     type: Date,
     require: false,
     default: Date.now()
+  },
+  deleteFlag: {
+    type: Boolean,
+    require: false,
+    default: false
   }
 })
 

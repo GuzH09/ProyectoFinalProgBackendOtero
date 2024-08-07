@@ -17,7 +17,7 @@ const AdminManager = () => {
 
   useEffect(() => {
     // Initialize socket connection
-    socketRef.current = io('http://localhost:8080', {
+    socketRef.current = io('https://proyectofinalprogbackendotero.onrender.com/', {
       withCredentials: true,
       reconnectionAttempts: 5, // Limit the number of reconnection attempts
       timeout: 10000 // Set timeout for the connection
