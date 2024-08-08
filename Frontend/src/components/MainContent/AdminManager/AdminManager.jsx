@@ -12,12 +12,16 @@ const AdminManager = () => {
   const [code, setCode] = useState('')
   const [price, setPrice] = useState('')
   const [stock, setStock] = useState('')
+
+  const [editProductId, setEditProductId] = useState(null)
+  const [editedProduct, setEditedProduct] = useState({})
+
   const [category, setCategory] = useState('')
   const socketRef = useRef(null)
 
   useEffect(() => {
     // Initialize socket connection
-    socketRef.current = io('https://proyectofinalprogbackendotero.onrender.com/', {
+    socketRef.current = io('https://proyectofinalprogbackendotero.onrender.com', {
       withCredentials: true,
       reconnectionAttempts: 5, // Limit the number of reconnection attempts
       timeout: 10000 // Set timeout for the connection
@@ -82,6 +86,37 @@ const AdminManager = () => {
     }
   }
 
+  const handleEditClick = (product) => {
+    setEditProductId(product._id)
+    setEditedProduct({
+      title: product.title,
+      description: product.description,
+      code: product.code,
+      price: product.price,
+      stock: product.stock,
+      category: product.category
+    })
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setEditedProduct((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const confirmEdit = () => {
+    if (socketRef.current && profile) {
+      socketRef.current.emit('updateProduct', { ...editedProduct, _id: editProductId }, profile)
+      setEditProductId(null)
+    }
+  }
+
+  const cancelEdit = () => {
+    setEditProductId(null)
+  }
+
   const deleteProduct = (productId) => {
     if (socketRef.current && profile) {
       socketRef.current.emit('deleteProduct', productId, profile)
@@ -90,8 +125,9 @@ const AdminManager = () => {
 
   return (
         <div className="flex flex-column min-h-[80vh] p-3 items-center">
-
+            {/* Form for adding new products */}
             <div className="flex flex-col items-center gap-3 w-full">
+              {/* Inputs for new product */}
                 <div className="flex flex-col items-center gap-1 w-1/3">
                     <label className="text-md">Nombre del Producto:</label>
                     <input
@@ -155,22 +191,83 @@ const AdminManager = () => {
                 <button onClick={addProduct} className="text-white rounded-md border-1 border-[#30363d] bg-[#21262d] p-1 text-sm w-1/6">Agregar Producto</button>
             </div>
 
-            <div className="w-1/3 flex flex-row flex-wrap gap-2 items-center pt-4 bg-white">
+            {/* List of products */}
+            <div className="bg-white w-2/3 pt-4 grid grid-cols-4 gap-2">
                 {products.map((prod) => (
-                    <article key={prod._id} className="text-center flex flex-col">
-                        <header>
-                            <h2 className="font-medium py-2">{prod.title}</h2>
-                        </header>
-                        <section>
-                            {prod.stock > 0 ? <p>Stock disponible: {prod.stock}</p> : <p>No hay stock.</p>}
-                            <p>Precio: ${prod.price}</p>
-                        </section>
-                        <button
-                            className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600"
-                            onClick={() => deleteProduct(prod._id)}
-                        >
-                            Eliminar Producto
-                        </button>
+                    <article key={prod._id} className="flex flex-col h-full p-1 w-full text-center rounded-md border-1 border-[#30363d] bg-[#3e4855]">
+                      {/* Product being edited */}
+                      {prod._id === editProductId
+                        ? (
+                          <>
+                            <header>
+                              <h2 className="font-medium py-2 text-white">
+                                <input type="text" name="title" value={editedProduct.title} onChange={handleInputChange} />
+                              </h2>
+                            </header>
+                            <section className='py-2 flex-grow'>
+                              <input type="text" name="description" value={editedProduct.description} onChange={handleInputChange} className='w-full'/>
+
+                              <input type="text" name="code" value={editedProduct.code} onChange={handleInputChange} />
+
+                              <input type="text" name="category" value={editedProduct.category} onChange={handleInputChange} />
+
+                              <input type="number" name="price" value={editedProduct.price} onChange={handleInputChange} />
+
+                              <input type="number" name="stock" value={editedProduct.stock} onChange={handleInputChange} />
+                            </section>
+                            <div className='flex flex-row justify-evenly gap-1 justify-self-end'>
+                              <button
+                                className="rounded bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600 w-1/3"
+                                onClick={confirmEdit}
+                              >
+                              Confirmar Modificación
+                              </button>
+                              <button
+                                className="rounded bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
+                                onClick={cancelEdit}
+                              >
+                                Cancelar
+                              </button>
+                            </div>
+                          </>
+                          )
+                        : (
+                          <>
+                            {/* Product not being edited */}
+                            <header>
+                              <h2 className="font-medium py-2 text-white">
+                                {prod.title}
+                              </h2>
+                            </header>
+                            <section className='py-2 flex-grow'>
+                              <p className='text-white'>Descripcion: {prod.description}</p>
+
+                              <p className='text-white'>Codigo: {prod.code}</p>
+
+                              <p className='text-white'>Categoria: {prod.category}</p>
+
+                              <p className='text-white'>Precio: {prod.price}</p>
+
+                              {prod.stock > 0
+                                ? <p className='text-white'>Stock disponible: {prod.stock}</p>
+                                : <p className='text-white'>No hay stock.</p>}
+                            </section>
+                            <div className='flex flex-row justify-evenly gap-1 justify-self-end'>
+                              <button
+                                  className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
+                                  onClick={() => deleteProduct(prod._id)}
+                              >
+                                  Eliminar Producto
+                              </button>
+                              <button
+                                  className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-gray-600 w-1/3"
+                                  onClick={() => handleEditClick(prod)}
+                              >
+                                  Modificar Producto
+                              </button>
+                            </div>
+                          </>
+                          )}
                     </article>
                 ))}
             </div>

@@ -30,6 +30,28 @@ export default (io) => {
       }
     })
 
+    socket.on('updateProduct', async (data, profile) => {
+      // Get Product Data
+      const { title, description, code, price, stock, category } = data
+
+      // Status is true by default
+      // Thumbnails is not required, [] by default
+      if (profile.role !== 'admin' && profile.role !== 'premium') {
+        io.emit('statusError', 'Unauthorized')
+      } else {
+        const owner = (profile.role === 'premium') ? profile.email : 'admin'
+        const newObjectData = { title, description, code, price, stock, category }
+        const result = await PM.updateProduct(data._id, newObjectData, owner)
+
+        if (result.success) {
+          const products = await PM.getProducts()
+          io.emit('refreshProducts', products)
+        } else {
+          io.emit('statusError', result)
+        }
+      }
+    })
+
     socket.on('deleteProduct', async (data, profile) => {
       // Delete Existing Product
       // Get Product Id
