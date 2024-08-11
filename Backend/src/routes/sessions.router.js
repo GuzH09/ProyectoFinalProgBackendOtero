@@ -102,7 +102,7 @@ sessionsRouter.post('/forgot-password', async (req, res) => {
   }
 
   const token = jwt.sign({ id: user._id }, process.env.SECRET_OR_KEY, { expiresIn: '10m' })
-  const resetLink = `http://localhost:3000/reset-password/${token}` // Frontend URL
+  const resetLink = `https://proyecto-final-prog-backend-otero.vercel.app/reset-password/${token}` // Frontend URL
 
   const mailOptions = {
     from: 'GuzH Tech Store' + ' <' + process.env.EMAIL_USER + '>',

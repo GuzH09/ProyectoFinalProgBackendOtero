@@ -7,6 +7,7 @@ import { uploader } from '../utils/multerUtil.js'
 import fs from 'fs'
 import __dirname from '../utils/constantsUtil.js'
 import CurrentUserDTO from '../DTOs/currentuser.dto.js'
+import transporter from '../config/mailerConfig.js'
 
 const usersRouter = Router()
 const SessionService = new UserController()
@@ -45,13 +46,32 @@ usersRouter.delete('/', passport.authenticate('jwt', { session: false }), roleau
     // Delete users who have not connected in the last two days
     const flagResults = []
     for (const userObj of usersToFlag) {
-      flagResults.push(await SessionService.flagUserForDeletion(userObj._id))
+      const queryResults = []
+
+      queryResults.push(await SessionService.flagUserForDeletion(userObj._id))
+
+      const mailOptions = {
+        from: 'GuzH Tech Store' + ' <' + process.env.EMAIL_USER + '>',
+        to: userObj.email,
+        subject: '[GuzH Tech Store] Your account has been flagged for deletion for inactivity',
+        html: '<p>Your account has been flagged for deletion due to inactivity.</p>'
+      }
+
+      try {
+        await transporter.sendMail(mailOptions)
+        req.logger.info({ status: 'Success', message: `Inactivity email sent to ${userObj.email}.` })
+        queryResults.push({ success: `Inactivity email sent to ${userObj.email}.` })
+      } catch (error) {
+        req.logger.warning({ status: 'Error', error: 'Error sending email.' })
+        req.logger.warning(error)
+        queryResults.push({ error: `Error sending email to ${userObj.email}.` })
+      }
+
+      flagResults.push(queryResults)
     }
 
     req.logger.info({ status: 'success', payload: flagResults })
     return res.status(200).send({ status: 'success', payload: flagResults })
-
-    // Añadir la logica para enviar un mail al usuario
   }
 })
 

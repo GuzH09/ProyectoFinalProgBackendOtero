@@ -5,6 +5,7 @@ import ProductController from '../controllers/ProductController.js'
 import { uploader } from '../utils/multerUtil.js'
 import productModel from '../models/productModel.js'
 import { roleauth } from '../middlewares/role-authorization.js'
+import transporter from '../config/mailerConfig.js'
 
 const productsRouter = Router()
 const PM = new ProductController()
@@ -155,12 +156,29 @@ productsRouter.delete('/:pid', passport.authenticate('jwt', { session: false }),
   const result = await PM.deleteProduct(productId, owner)
   if (result.success) {
     req.logger.info({ message: 'Delete Existing Product Endpoint', result })
+
+    if (owner !== 'admin') {
+      const mailOptions = {
+        from: 'GuzH Tech Store' + ' <' + process.env.EMAIL_USER + '>',
+        to: owner,
+        subject: '[GuzH Tech Store] One of your products has been deleted',
+        html: '<p>One of your products has been deleted.</p>'
+      }
+      try {
+        await transporter.sendMail(mailOptions)
+        req.logger.info({ status: 'Success', message: `Notification sent to email: ${owner}.` })
+        result.email = { status: 'Success', message: `Notification sent to email: ${owner}.` }
+      } catch (error) {
+        req.logger.warning({ status: 'Error', error: 'Error sending email.' })
+        result.email = { status: 'Error', message: `Error sending email to: ${owner}.` }
+      }
+    }
+
     res.status(201).send(result)
   } else {
     req.logger.warning({ result })
     res.status(400).send(result)
   }
-  // Añadir logica para que envie un email en caso de que el usuario al que pertenece el producto, sea un usuario premium
 })
 
 export default productsRouter
