@@ -33,6 +33,8 @@ const addLogger = (req, res, next) => {
   next()
 }
 
+export const WSLogger = devLogger
+
 console.log('Logger loaded')
 
 export default addLogger
