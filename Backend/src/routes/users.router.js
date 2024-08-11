@@ -6,7 +6,7 @@ import { foldervalidation } from '../middlewares/folder-validation.js'
 import { uploader } from '../utils/multerUtil.js'
 import fs from 'fs'
 import __dirname from '../utils/constantsUtil.js'
-import CurrentUserDTO from '../DTOs/currentuser.dto.js'
+import AllUsersDTO from '../DTOs/allusers.dto.js'
 import transporter from '../config/mailerConfig.js'
 
 const usersRouter = Router()
@@ -19,7 +19,7 @@ usersRouter.get('/', passport.authenticate('jwt', { session: false }), roleauth(
     req.logger.warning(result)
     return res.status(400).send(result)
   } else {
-    const transformedUsers = result.map(user => new CurrentUserDTO(user))
+    const transformedUsers = result.map(user => new AllUsersDTO(user))
 
     req.logger.info({ status: 'success', payload: transformedUsers })
     return res.status(200).send({ status: 'success', payload: transformedUsers })
