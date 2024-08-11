@@ -1,14 +1,17 @@
 import { useState, useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
+import '../MainContent/SpinnerLoader/SpinnerLoader.css'
 
 const LoginContainer = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault()
 
     try {
@@ -30,6 +33,8 @@ const LoginContainer = () => {
       }
     } catch (error) {
       console.error(error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -88,6 +93,12 @@ const LoginContainer = () => {
         <Link to="/forgot-password" className="p-1 text-sm text-white text-center">¿Olvidaste tu contraseña?</Link>
 
       </div>
+      {loading
+        ? (
+          // <div className="flex flex-row items-baseline justify-center pt-4 bg-white min-h-[50vh]">
+          <div className="loader"></div>
+          )
+        : (null)}
     </div>
   )
 }

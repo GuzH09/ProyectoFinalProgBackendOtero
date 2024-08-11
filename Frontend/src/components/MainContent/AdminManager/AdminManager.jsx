@@ -2,6 +2,7 @@ import { useEffect, useState, useContext, useRef } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import io from 'socket.io-client'
 import { useNotification } from '../../../context/Notification'
+import '../SpinnerLoader/SpinnerLoader.css'
 
 const AdminManager = () => {
   const { profile } = useContext(AuthContext)
@@ -18,6 +19,7 @@ const AdminManager = () => {
 
   const [category, setCategory] = useState('')
   const socketRef = useRef(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     // Initialize socket connection
@@ -29,12 +31,14 @@ const AdminManager = () => {
 
     // Emit user connection event
     if (profile) {
+      setLoading(true)
       socketRef.current.emit('productsConnect', profile)
     }
 
     // Receive messages from server
     socketRef.current.on('refreshProducts', (data) => {
       setProducts(data)
+      setLoading(false)
     })
 
     // Listen for new user notification
@@ -193,83 +197,85 @@ const AdminManager = () => {
 
             {/* List of products */}
             <div className="bg-white w-2/3 pt-4 grid grid-cols-4 gap-2">
-                {products.map((prod) => (
-                    <article key={prod._id} className="flex flex-col h-full p-1 w-full text-center rounded-md border-1 border-[#30363d] bg-[#3e4855]">
-                      {/* Product being edited */}
-                      {prod._id === editProductId
-                        ? (
-                          <>
-                            <header>
-                              <h2 className="font-medium py-2 text-white">
-                                <input type="text" name="title" value={editedProduct.title} onChange={handleInputChange} />
-                              </h2>
-                            </header>
-                            <section className='py-2 flex-grow'>
-                              <input type="text" name="description" value={editedProduct.description} onChange={handleInputChange} className='w-full'/>
-
-                              <input type="text" name="code" value={editedProduct.code} onChange={handleInputChange} />
-
-                              <input type="text" name="category" value={editedProduct.category} onChange={handleInputChange} />
-
-                              <input type="number" name="price" value={editedProduct.price} onChange={handleInputChange} />
-
-                              <input type="number" name="stock" value={editedProduct.stock} onChange={handleInputChange} />
-                            </section>
-                            <div className='flex flex-row justify-evenly gap-1 justify-self-end'>
-                              <button
-                                className="rounded bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600 w-1/3"
-                                onClick={confirmEdit}
-                              >
-                              Confirmar Modificación
-                              </button>
-                              <button
-                                className="rounded bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
-                                onClick={cancelEdit}
-                              >
-                                Cancelar
-                              </button>
-                            </div>
-                          </>
-                          )
-                        : (
-                          <>
-                            {/* Product not being edited */}
-                            <header>
-                              <h2 className="font-medium py-2 text-white">
-                                {prod.title}
-                              </h2>
-                            </header>
-                            <section className='py-2 flex-grow'>
-                              <p className='text-white'>Descripcion: {prod.description}</p>
-
-                              <p className='text-white'>Codigo: {prod.code}</p>
-
-                              <p className='text-white'>Categoria: {prod.category}</p>
-
-                              <p className='text-white'>Precio: {prod.price}</p>
-
-                              {prod.stock > 0
-                                ? <p className='text-white'>Stock disponible: {prod.stock}</p>
-                                : <p className='text-white'>No hay stock.</p>}
-                            </section>
-                            <div className='flex flex-row justify-evenly gap-1 justify-self-end'>
-                              <button
-                                  className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
-                                  onClick={() => deleteProduct(prod._id)}
-                              >
-                                  Eliminar Producto
-                              </button>
-                              <button
-                                  className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-gray-600 w-1/3"
-                                  onClick={() => handleEditClick(prod)}
-                              >
-                                  Modificar Producto
-                              </button>
-                            </div>
-                          </>
-                          )}
-                    </article>
-                ))}
+                {loading
+                  ? (
+                      <div className="flex flex-row items-baseline justify-center pt-4 bg-white min-h-[50vh]">
+                        <div className="loader"></div>
+                      </div>
+                    )
+                  : (
+                    <>
+                    {products.map((prod) => (
+                      <article key={prod._id} className="flex flex-col h-full p-1 w-full text-center rounded-md border-1 border-[#30363d] bg-[#3e4855]">
+                        {/* Product being edited */}
+                        {prod._id === editProductId
+                          ? (
+                            <>
+                              <header>
+                                <h2 className="font-medium py-2 text-white">
+                                  <input type="text" name="title" value={editedProduct.title} onChange={handleInputChange} />
+                                </h2>
+                              </header>
+                              <section className='py-2 flex-grow'>
+                                <input type="text" name="description" value={editedProduct.description} onChange={handleInputChange} className='w-full'/>
+                                <input type="text" name="code" value={editedProduct.code} onChange={handleInputChange} />
+                                <input type="text" name="category" value={editedProduct.category} onChange={handleInputChange} />
+                                <input type="number" name="price" value={editedProduct.price} onChange={handleInputChange} />
+                                <input type="number" name="stock" value={editedProduct.stock} onChange={handleInputChange} />
+                              </section>
+                              <div className='flex flex-row justify-evenly gap-1 justify-self-end'>
+                                <button
+                                  className="rounded bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600 w-1/3"
+                                  onClick={confirmEdit}
+                                >
+                                Confirmar Modificación
+                                </button>
+                                <button
+                                  className="rounded bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
+                                  onClick={cancelEdit}
+                                >
+                                  Cancelar
+                                </button>
+                              </div>
+                            </>
+                            )
+                          : (
+                            <>
+                              {/* Product not being edited */}
+                              <header>
+                                <h2 className="font-medium py-2 text-white">
+                                  {prod.title}
+                                </h2>
+                              </header>
+                              <section className='py-2 flex-grow'>
+                                <p className='text-white'>Descripcion: {prod.description}</p>
+                                <p className='text-white'>Codigo: {prod.code}</p>
+                                <p className='text-white'>Categoria: {prod.category}</p>
+                                <p className='text-white'>Precio: {prod.price}</p>
+                                {prod.stock > 0
+                                  ? <p className='text-white'>Stock disponible: {prod.stock}</p>
+                                  : <p className='text-white'>No hay stock.</p>}
+                              </section>
+                              <div className='flex flex-row justify-evenly gap-1 justify-self-end'>
+                                <button
+                                    className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
+                                    onClick={() => deleteProduct(prod._id)}
+                                >
+                                    Eliminar Producto
+                                </button>
+                                <button
+                                    className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-gray-600 w-1/3"
+                                    onClick={() => handleEditClick(prod)}
+                                >
+                                    Modificar Producto
+                                </button>
+                              </div>
+                            </>
+                            )}
+                      </article>
+                    ))}
+                    </>
+                    )}
             </div>
         </div>
   )

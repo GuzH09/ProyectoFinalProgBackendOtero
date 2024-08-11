@@ -85,57 +85,67 @@ const UsersManager = () => {
         <div className="flex flex-column min-h-[80vh] p-3 items-center">
             {/* List of products */}
             <div className="bg-white w-2/3 pt-4 grid grid-cols-4 gap-2">
-                {users.map((user) => (
-                    <article key={user.id} className="flex flex-col h-full p-1 w-full text-center rounded-md border-1 border-[#30363d] bg-[#3e4855]">
-                      <header>
-                        <h2 className="font-medium py-2 text-white">
-                          {user.first_name + ' ' + user.last_name}
-                        </h2>
-                      </header>
-                      <section className='py-2 flex-grow'>
-                        <p className='text-white'>Edad: {user.age}</p>
+              {loading
+                ? (
+                    <div className="flex flex-row items-baseline justify-center pt-4 bg-white min-h-[50vh]">
+                      <div className="loader"></div>
+                    </div>
+                  )
+                : (
+                  <>
+                    {users.map((user) => (
+                      <article key={user.id} className="flex flex-col h-full p-1 w-full text-center rounded-md border-1 border-[#30363d] bg-[#3e4855]">
+                        <header>
+                          <h2 className="font-medium py-2 text-white">
+                            {user.first_name + ' ' + user.last_name}
+                          </h2>
+                        </header>
+                        <section className='py-2 flex-grow'>
+                          <p className='text-white'>Edad: {user.age}</p>
 
-                        <p className='text-white'>Email: {user.email}</p>
+                          <p className='text-white'>Email: {user.email}</p>
 
+                          {user.id === editUserId
+                            ? <input type="text" name="role" value={editedRoleUser} onChange={(e) => setEditedRoleUser(e.target.value)} />
+                            : <p className='text-white'>Rol: {user.role}</p>}
+
+                          <p className='text-white'>Ultima Conexion: {user.last_connection}</p>
+                        </section>
+                        <div className='flex flex-row justify-evenly gap-1 justify-self-end'>
                         {user.id === editUserId
-                          ? <input type="text" name="role" value={editedRoleUser} onChange={(e) => setEditedRoleUser(e.target.value)} />
-                          : <p className='text-white'>Rol: {user.role}</p>}
-
-                        <p className='text-white'>Ultima Conexion: {user.last_connection}</p>
-                      </section>
-                      <div className='flex flex-row justify-evenly gap-1 justify-self-end'>
-                      {user.id === editUserId
-                        ? <>
+                          ? <>
+                              <button
+                                className="rounded bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600 w-1/3"
+                                onClick={confirmEdit}
+                              >
+                                Confirmar Modificación
+                              </button>
+                              <button
+                                className="rounded bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
+                                onClick={cancelEdit}
+                              >
+                                Cancelar
+                              </button>
+                            </>
+                          : <>
                             <button
-                              className="rounded bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600 w-1/3"
-                              onClick={confirmEdit}
+                            className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
+                            onClick={() => deleteUser(user.id)}
                             >
-                              Confirmar Modificación
+                              Eliminar Usuario
                             </button>
                             <button
-                              className="rounded bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
-                              onClick={cancelEdit}
+                              className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-gray-600 w-1/3"
+                              onClick={() => handleEditClick(user)}
                             >
-                              Cancelar
+                              Modificar Usuario
                             </button>
-                          </>
-                        : <>
-                          <button
-                          className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600 w-1/3"
-                          onClick={() => deleteUser(user.id)}
-                          >
-                            Eliminar Usuario
-                          </button>
-                          <button
-                            className="rounded bg-blue-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-gray-600 w-1/3"
-                            onClick={() => handleEditClick(user)}
-                          >
-                            Modificar Usuario
-                          </button>
-                          </>}
-                      </div>
-                    </article>
-                ))}
+                            </>}
+                        </div>
+                      </article>
+                    ))}
+                  </>
+                  )}
             </div>
         </div>
   )
