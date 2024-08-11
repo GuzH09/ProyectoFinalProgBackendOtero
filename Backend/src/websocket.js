@@ -1,3 +1,5 @@
+import winston from 'winston'
+import transporter from './config/mailerConfig.js'
 import MessageService from './services/MessageService.js'
 import ProductService from './services/ProductService.js'
 const PM = new ProductService()
@@ -6,6 +8,23 @@ const CHM = new MessageService()
 export default (io) => {
   io.on('connection', socket => {
     console.log('Nuevo cliente conectado -----> ', socket.id)
+
+    const customErrLevels = {
+      levels: {
+        fatal: 0,
+        error: 1,
+        warning: 2,
+        info: 3,
+        http: 4,
+        debug: 5
+      }
+    }
+    const logger = winston.createLogger({
+      levels: customErrLevels.levels,
+      transports: [
+        new winston.transports.Console({ level: 'debug' })
+      ]
+    })
 
     socket.on('addProduct', async (data, profile) => {
       // Get Product Data
@@ -63,6 +82,22 @@ export default (io) => {
         const result = await PM.deleteProduct(productId, owner)
         if (result.success) {
           const products = await PM.getProducts()
+
+          if (owner !== 'admin') {
+            const mailOptions = {
+              from: 'GuzH Tech Store' + ' <' + process.env.EMAIL_USER + '>',
+              to: owner,
+              subject: '[GuzH Tech Store] One of your products has been deleted',
+              html: '<p>One of your products has been deleted.</p>'
+            }
+            try {
+              await transporter.sendMail(mailOptions)
+              logger.info({ status: 'Success', message: `Notification sent to email: ${owner}.` })
+            } catch (error) {
+              logger.warning({ status: 'Error', error: 'Error sending email.' })
+            }
+          }
+
           io.emit('refreshProducts', products)
         } else {
           io.emit('statusError', result)
