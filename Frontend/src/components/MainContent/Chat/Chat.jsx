@@ -63,12 +63,12 @@ const Chat = () => {
 
   return (
         <div className="flex flex-column min-h-[80vh] gap-2 p-3 justify-between">
-            <h1 className='text-center rounded-md border-1 border-[#30363d] bg-[#21262d] p-3 text-sm text-white w-3/4 self-center'>¡Hola Coders! Bienvenidos a mi CoderChat Comunitario</h1>
+            <h1 className='text-center rounded-md border-1 border-[#30363d] bg-[#21262d] p-3 text-sm text-white w-3/4 self-center'>¡Hola! Bienvenido al chat Premium.</h1>
 
             <ul className='w-2/4 self-center grid gap-1'>
                 {messages.map((msg, index) => (
-                    <li className={`rounded border-1 border-[#30363d] bg-[#21262d] p-3 text-sm text-white ${msg.user == profile.first_name + ' ' + profile.last_name ? 'justify-self-end' : 'justify-self-start'}`} key={index}>
-                        <strong className={`${msg.user == profile.first_name + ' ' + profile.last_name ? 'text-lime-500' : 'text-red-500'}`}>{msg.user}</strong>: {msg.message}
+                    <li className={`rounded border-1 border-[#30363d] bg-[#21262d] p-3 text-sm text-white ${msg.user === profile.first_name + ' ' + profile.last_name ? 'justify-self-end' : 'justify-self-start'}`} key={index}>
+                        <strong className={`${msg.user === profile.first_name + ' ' + profile.last_name ? 'text-lime-500' : 'text-red-500'}`}>{msg.user}</strong>: {msg.message}
                     </li>
                 ))}
             </ul>

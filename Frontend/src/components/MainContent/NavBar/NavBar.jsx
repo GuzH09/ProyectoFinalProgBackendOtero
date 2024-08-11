@@ -1,6 +1,7 @@
 import { NavLink, Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
+import UsersWidget from './UsersManagerWidget'
 import AdminWidget from './AdminManagerWidget'
 import ProfileWidget from './ProfileWidget'
 import CartWidget from './CartWidget'
@@ -32,6 +33,7 @@ const NavBar = () => {
         <div className="w-1/3 flex items-center justify-end gap-3">
             {profile && (profile.role === 'admin' || profile.role === 'premium') && <ChatWidget />}
             {profile && (profile.role === 'admin' || profile.role === 'premium') && <AdminWidget />}
+            {profile && (profile.role === 'admin' || profile.role === 'premium') && <UsersWidget />}
             {profile && <ProfileWidget />}
             {profile && <CartWidget />}
         </div>

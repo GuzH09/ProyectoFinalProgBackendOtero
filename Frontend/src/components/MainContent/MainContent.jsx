@@ -10,6 +10,7 @@ import Profile from './Profile/Profile'
 import ProtectedRoute from '../ProtectedRoute'
 import Chat from './Chat/Chat'
 import AdminManager from './AdminManager/AdminManager'
+import UsersManager from './AdminManager/UsersManager'
 import { NotificationProvider } from '../../context/Notification'
 import Checkout from './Checkout/Checkout'
 
@@ -32,6 +33,7 @@ function MainContent () {
                         <Route element={<ProtectedRoute roleNeeded={['admin', 'premium']} redirectTo="/" />}>
                             <Route path="/chat" element={<Chat />} />
                             <Route path="/manager" element={<AdminManager />} />
+                            <Route path="/usersmanager" element={<UsersManager />} />
                         </Route>
                     </Routes>
                 </CartProvider>
