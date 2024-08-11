@@ -18,6 +18,10 @@ export default class UserController {
     return this.userService.getUserByEmail(useremail)
   }
 
+  async deleteUser (uid) {
+    return this.userService.deleteUser(uid)
+  }
+
   async registerUser (user) {
     const { first_name, last_name, email, age, password } = user
 

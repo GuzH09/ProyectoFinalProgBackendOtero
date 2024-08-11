@@ -96,4 +96,16 @@ export default class UserService {
       return { error: error.message }
     }
   }
+
+  async deleteUser (uid) {
+    try {
+      const user = await this.getUser(uid)
+      if (user.error) return { user }
+      const result = await userModel.deleteOne({ _id: uid })
+      if (result.deletedCount === 0) return { error: `User with id ${uid} not found.` }
+      return { success: 'User deleted.' }
+    } catch (error) {
+      return { error: error.message }
+    }
+  }
 }

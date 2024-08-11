@@ -87,6 +87,30 @@ usersRouter.get('/:uid', passport.authenticate('jwt', { session: false }), rolea
   }
 })
 
+// DELETE User
+usersRouter.delete('/:uid', passport.authenticate('jwt', { session: false }), roleauth(['admin']), async (req, res) => {
+  const result = await SessionService.deleteUser(req.params.uid)
+  if (result.error) {
+    req.logger.warning(result)
+    return res.status(400).send(result)
+  } else {
+    req.logger.info({ status: 'success', payload: result })
+    return res.status(200).send({ status: 'success', payload: result })
+  }
+})
+
+// UPDATE User
+usersRouter.put('/:uid', passport.authenticate('jwt', { session: false }), roleauth(['admin']), async (req, res) => {
+  const result = await SessionService.updateUser(req.params.uid, req.body.role)
+  if (result.error) {
+    req.logger.warning(result)
+    return res.status(400).send(result)
+  } else {
+    req.logger.info({ status: 'success', payload: result })
+    return res.status(200).send({ status: 'success', payload: result })
+  }
+})
+
 // POST Upgrade User To Premium or viceversa
 // Solo si ya se han cargado 3 documentos:
 usersRouter.post('/premium/:uid', passport.authenticate('jwt', { session: false }), roleauth(['admin']), async (req, res) => {
