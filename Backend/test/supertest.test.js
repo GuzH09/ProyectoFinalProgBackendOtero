@@ -2,7 +2,7 @@ import chai from 'chai'
 import supertest from 'supertest'
 
 const expect = chai.expect
-const requester = supertest('http://localhost:8080')
+const requester = supertest('https://proyectofinalprogbackendotero.onrender.com')
 
 // Registrarse
 // Registrarse de nuevo con el mismo email (Error)
