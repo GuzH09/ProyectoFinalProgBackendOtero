@@ -33,7 +33,7 @@ const NavBar = () => {
         <div className="w-1/3 flex items-center justify-end gap-3">
             {profile && (profile.role === 'admin' || profile.role === 'premium') && <ChatWidget />}
             {profile && (profile.role === 'admin' || profile.role === 'premium') && <AdminWidget />}
-            {profile && (profile.role === 'admin' || profile.role === 'premium') && <UsersWidget />}
+            {profile && (profile.role === 'admin') && <UsersWidget />}
             {profile && <ProfileWidget />}
             {profile && <CartWidget />}
         </div>

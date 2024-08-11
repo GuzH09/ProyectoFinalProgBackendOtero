@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext, useRef, useCallback } from 'react'
-import { AuthContext } from '../../../context/AuthContext'
+import { useEffect, useState } from 'react'
 import { useNotification } from '../../../context/Notification'
 
 const UsersManager = () => {
@@ -39,7 +38,7 @@ const UsersManager = () => {
 
   const confirmEdit = async () => {
     try {
-      await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/users/${editUserId}`, {
+      const response = await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/users/${editUserId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -47,12 +46,17 @@ const UsersManager = () => {
         body: JSON.stringify({ role: editedRoleUser }),
         credentials: 'include'
       })
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      setEditUserId(null)
+      setEditedRoleUser('')
+      setUsers(prevUsers => prevUsers.map(user => user.id === editUserId ? { ...user, role: editedRoleUser } : user))
     } catch (error) {
       console.error(error)
     }
     setEditUserId(null)
     setEditedRoleUser('')
-    setUsers(prevUsers => prevUsers.map(user => user.id === editUserId ? { ...user, role: editedRoleUser } : user))
   }
 
   const cancelEdit = () => {
@@ -61,13 +65,17 @@ const UsersManager = () => {
 
   const deleteUser = async (uid) => {
     try {
-      await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/users/${uid}`, {
+      const response = await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/users/${uid}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         },
         credentials: 'include'
       })
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      setUsers(prevUsers => prevUsers.filter(user => user.id !== uid))
     } catch (error) {
       console.error(error)
     }
