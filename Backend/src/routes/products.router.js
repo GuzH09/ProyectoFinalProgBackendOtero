@@ -153,16 +153,17 @@ productsRouter.delete('/:pid', passport.authenticate('jwt', { session: false }),
   // Get Product Id from Params
   const productId = req.params.pid
   const owner = (req.user.role === 'premium') ? req.user.email : 'admin'
+  const productInfo = await PM.getProductById(productId)
   const result = await PM.deleteProduct(productId, owner)
   if (result.success) {
     req.logger.info({ message: 'Delete Existing Product Endpoint', result })
 
-    if (owner !== 'admin') {
+    if (productInfo.owner !== 'admin') {
       const mailOptions = {
         from: 'GuzH Tech Store' + ' <' + process.env.EMAIL_USER + '>',
-        to: owner,
+        to: productInfo.owner,
         subject: '[GuzH Tech Store] One of your products has been deleted',
-        html: '<p>One of your products has been deleted.</p>'
+        html: `<p>Your product: ${productInfo.title} has been deleted.</p>`
       }
       try {
         await transporter.sendMail(mailOptions)

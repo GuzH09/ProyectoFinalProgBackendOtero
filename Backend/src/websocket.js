@@ -76,7 +76,7 @@ export default (io) => {
               from: 'GuzH Tech Store' + ' <' + process.env.EMAIL_USER + '>',
               to: productInfo.owner,
               subject: '[GuzH Tech Store] One of your products has been deleted',
-              html: '<p>One of your products has been deleted.</p>'
+              html: `<p>Your product: ${productInfo.title} has been deleted.</p>`
             }
             try {
               await transporter.sendMail(mailOptions)
