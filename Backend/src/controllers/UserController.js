@@ -22,6 +22,14 @@ export default class UserController {
     return this.userService.deleteUser(uid)
   }
 
+  async deleteUserCart (uid) {
+    return this.userService.deleteUserCart(uid)
+  }
+
+  async deleteUserProducts (uid) {
+    return this.userService.deleteUserProducts(uid)
+  }
+
   async registerUser (user) {
     const { first_name, last_name, email, age, password } = user
 

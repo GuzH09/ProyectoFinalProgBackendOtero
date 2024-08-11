@@ -89,13 +89,27 @@ usersRouter.get('/:uid', passport.authenticate('jwt', { session: false }), rolea
 
 // DELETE User
 usersRouter.delete('/:uid', passport.authenticate('jwt', { session: false }), roleauth(['admin']), async (req, res) => {
-  const result = await SessionService.deleteUser(req.params.uid)
-  if (result.error) {
-    req.logger.warning(result)
-    return res.status(400).send(result)
+  const userCart = await SessionService.deleteUserCart(req.params.uid)
+  if (userCart.error) {
+    req.logger.warning(userCart)
+    return res.status(400).send(userCart)
   } else {
-    req.logger.info({ status: 'success', payload: result })
-    return res.status(200).send({ status: 'success', payload: result })
+    req.logger.info({ status: 'success', payload: userCart })
+    const userProducts = await SessionService.deleteUserProducts(req.params.uid)
+    if (userProducts.error) {
+      req.logger.warning(userProducts)
+      return res.status(400).send(userProducts)
+    } else {
+      req.logger.info({ status: 'success', payload: userProducts })
+      const result = await SessionService.deleteUser(req.params.uid)
+      if (result.error) {
+        req.logger.warning(result)
+        return res.status(400).send(result)
+      } else {
+        req.logger.info({ status: 'success', payload: result })
+        return res.status(200).send({ status: 'success', payload: result })
+      }
+    }
   }
 })
 

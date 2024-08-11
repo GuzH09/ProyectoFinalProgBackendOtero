@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import userModel from '../models/usersModel.js'
 import { isValidPassword } from '../utils/functionsUtil.js'
 import cartModel from '../models/CartModel.js'
+import productModel from '../models/productModel.js'
 
 import process from 'process'
 
@@ -39,6 +40,42 @@ export default class UserService {
       return user
     } catch (error) {
       return { error: 'User doesnt exists.' }
+    }
+  }
+
+  async deleteUser (uid) {
+    try {
+      const user = await this.getUser(uid)
+      if (user.error) return { user }
+      const result = await userModel.deleteOne({ _id: uid })
+      if (result.deletedCount === 0) return { error: `User with id ${uid} not found.` }
+      return { success: 'User deleted.' }
+    } catch (error) {
+      return { error: error.message }
+    }
+  }
+
+  async deleteUserCart (uid) {
+    try {
+      const user = await this.getUser(uid)
+      if (user.error) return { user }
+      const result = await cartModel.deleteOne({ _id: user.cart[0] })
+      if (result.deletedCount === 0) return { error: `Cart with id ${user.cart[0]} not found.` }
+      return { success: `Cart from user ${uid} deleted.` }
+    } catch (error) {
+      return { error: error.message }
+    }
+  }
+
+  async deleteUserProducts (uid) {
+    try {
+      const user = await this.getUser(uid)
+      if (user.error) return { user }
+      const result = await productModel.deleteMany({ owner: user.email })
+      if (result.deletedCount === 0) return { error: `Couldn't delete all products from user ${uid}.` }
+      return { success: `All products from user ${uid} were deleted.` }
+    } catch (error) {
+      return { error: error.message }
     }
   }
 
@@ -92,18 +129,6 @@ export default class UserService {
     try {
       await userModel.updateOne({ _id: uid }, { deleteFlag: true })
       return { success: `User ${uid} flagged for deletion.` }
-    } catch (error) {
-      return { error: error.message }
-    }
-  }
-
-  async deleteUser (uid) {
-    try {
-      const user = await this.getUser(uid)
-      if (user.error) return { user }
-      const result = await userModel.deleteOne({ _id: uid })
-      if (result.deletedCount === 0) return { error: `User with id ${uid} not found.` }
-      return { success: 'User deleted.' }
     } catch (error) {
       return { error: error.message }
     }
