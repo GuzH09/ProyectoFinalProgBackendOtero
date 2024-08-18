@@ -13,7 +13,7 @@ const LoginContainer = () => {
   const handleSubmit = async (e) => {
     setLoading(true)
     e.preventDefault()
-
+    console.log(import.meta.env.VITE_BACKEND_URL)
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/sessions/login`, {
         method: 'POST',
