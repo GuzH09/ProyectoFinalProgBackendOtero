@@ -22,7 +22,7 @@ import { Server } from 'socket.io'
 import websocket from './websocket.js'
 
 // Load environment variables based on the environment
-const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env'
+const envFile = process.env.NODE_ENV === 'prod' ? '.env.production' : '.env'
 dotenv.config({ path: envFile })
 
 // Express
