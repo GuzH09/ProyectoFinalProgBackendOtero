@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
         credentials: 'include'
       })
       if (response.ok) {
-        console.log(response)
         const data = await response.json()
         setProfile(data.user)
         setIsAuthenticated(true)
