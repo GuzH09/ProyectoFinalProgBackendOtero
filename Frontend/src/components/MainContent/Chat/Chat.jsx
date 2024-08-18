@@ -10,7 +10,7 @@ const Chat = () => {
 
   useEffect(() => {
     // Initialize socket connection
-    socketRef.current = io('https://proyectofinalprogbackendotero.onrender.com', {
+    socketRef.current = io(`${import.meta.env.VITE_BACKEND_URL}`, {
       withCredentials: true,
       reconnectionAttempts: 5, // Limit the number of reconnection attempts
       timeout: 10000 // Set timeout for the connection

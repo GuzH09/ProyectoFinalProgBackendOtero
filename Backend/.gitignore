@@ -2,3 +2,4 @@
 src/models/oldfsjsons
 src/services/oldFSManagers
 .env
+.env.production

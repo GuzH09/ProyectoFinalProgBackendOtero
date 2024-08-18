@@ -21,8 +21,11 @@ import __dirname from './utils/constantsUtil.js'
 import { Server } from 'socket.io'
 import websocket from './websocket.js'
 
-dotenv.config()
+// Load environment variables based on the environment
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env'
+dotenv.config({ path: envFile })
 
+// Express
 const app = express()
 
 // MongoDB connect
@@ -44,7 +47,7 @@ const specs = swaggerJsdoc(swaggerOptions)
 
 app.use(addLogger)
 app.use(express.json())
-app.use(cors({ credentials: true, origin: ['https://proyecto-final-prog-backend-otero.vercel.app', 'http://localhost:3000'] }))
+app.use(cors({ credentials: true, origin: [process.env.FRONTEND_URL] }))
 app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static(`${__dirname}/../../public`))
 app.use(cookieParser())
@@ -60,11 +63,11 @@ app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 
 const PORT = process.env.PORT || 8080
-const httpServer = app.listen(PORT, () => { console.log(`Servidor activo en http://localhost:${PORT}`) })
+const httpServer = app.listen(PORT, () => { console.log(`Active server on ${process.env.BACKEND_URL}`) })
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ['https://proyecto-final-prog-backend-otero.vercel.app', 'http://localhost:3000'],
+    origin: [process.env.FRONTEND_URL],
     credentials: true,
     methods: ['GET', 'POST']
   }

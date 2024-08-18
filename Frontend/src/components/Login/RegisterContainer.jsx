@@ -15,7 +15,7 @@ const RegisterContainer = () => {
     e.preventDefault()
 
     try {
-      const response = await fetch('https://proyectofinalprogbackendotero.onrender.com/api/sessions/register', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/sessions/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

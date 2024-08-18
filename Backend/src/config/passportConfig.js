@@ -29,7 +29,7 @@ const initializatePassport = () => {
   passport.use('github', new GitHubStrategy({
     clientID: CLIENT_ID,
     clientSecret: SECRET_ID,
-    callbackURL: 'https://proyectofinalprogbackendotero.onrender.com/api/sessions/githubcallback',
+    callbackURL: `${process.env.BACKEND_HOST}/api/sessions/githubcallback`,
     scope: ['user:email']
   }, async (accessToken, refreshToken, profile, done) => {
     try {

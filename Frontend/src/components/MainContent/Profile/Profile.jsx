@@ -9,7 +9,7 @@ const Profile = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('https://proyectofinalprogbackendotero.onrender.com/api/sessions/logout', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/sessions/logout`, {
         method: 'GET',
         credentials: 'include'
       })

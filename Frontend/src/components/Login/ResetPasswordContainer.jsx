@@ -19,7 +19,7 @@ const ResetPasswordContainer = () => {
     }
 
     try {
-      const response = await fetch('https://proyectofinalprogbackendotero.onrender.com/api/sessions/reset-password', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/sessions/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

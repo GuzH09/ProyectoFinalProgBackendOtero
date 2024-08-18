@@ -47,12 +47,12 @@ sessionsRouter.get('/github', passport.authenticate('github', { scope: ['user:em
 // API Login Callback with Github
 sessionsRouter.get('/githubcallback', passport.authenticate('github', {
   session: false,
-  failureRedirect: 'https://proyecto-final-prog-backend-otero.vercel.app/login'
+  failureRedirect: `${process.env.BACKEND_HOST}/login`
 }), (req, res) => {
   const token = jwt.sign(req.user, process.env.SECRET_OR_KEY, { expiresIn: '1h' })
   res.cookie('auth', token, { maxAge: 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: 'None' })
   req.logger.info({ message: 'Successful Callback' })
-  return res.redirect('https://proyecto-final-prog-backend-otero.vercel.app/home')
+  return res.redirect(`${process.env.BACKEND_HOST}/home`)
 })
 
 // API Current
@@ -101,7 +101,7 @@ sessionsRouter.post('/forgot-password', async (req, res) => {
   }
 
   const token = jwt.sign({ id: user._id }, process.env.SECRET_OR_KEY, { expiresIn: '10m' })
-  const resetLink = `https://proyecto-final-prog-backend-otero.vercel.app/reset-password/${token}` // Frontend URL
+  const resetLink = `https://proyecto-final-prog-backend-otero.vercel.app/reset-password/${token}` // FRONTEND_HOST
 
   const mailOptions = {
     from: 'GuzH Tech Store' + ' <' + process.env.EMAIL_USER + '>',

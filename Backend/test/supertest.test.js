@@ -2,7 +2,7 @@ import chai from 'chai'
 import supertest from 'supertest'
 
 const expect = chai.expect
-const requester = supertest('https://proyectofinalprogbackendotero.onrender.com')
+const requester = supertest(`${process.env.BACKEND_HOST}`)
 
 // Registrarse
 // Registrarse de nuevo con el mismo email (Error)

@@ -1,12 +1,12 @@
 {
-  "name": "proyectofinalcoderbackendotero",
+  "name": "reactecommercefullstack",
   "type": "module",
   "version": "1.0.0",
-  "description": "proyectofinalcoderbackendotero",
+  "description": "reactecommercefullstack",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
+    "start": "set NODE_ENV=prod && node src/app.js",
+    "dev": "set NODE_ENV=dev && nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext js --report-unused-disable-directives --max-warnings 0 --fix"
   },

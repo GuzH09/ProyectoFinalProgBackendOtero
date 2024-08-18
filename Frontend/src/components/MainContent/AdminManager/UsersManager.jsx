@@ -12,7 +12,7 @@ const UsersManager = () => {
     const fetchData = async () => {
       try {
         setLoading(true)
-        const response = await fetch('https://proyectofinalprogbackendotero.onrender.com/api/users', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
           credentials: 'include'
         })
         if (!response.ok) {
@@ -38,7 +38,7 @@ const UsersManager = () => {
 
   const confirmEdit = async () => {
     try {
-      const response = await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/users/${editUserId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${editUserId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ const UsersManager = () => {
 
   const deleteUser = async (uid) => {
     try {
-      const response = await fetch(`https://proyectofinalprogbackendotero.onrender.com/api/users/${uid}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${uid}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

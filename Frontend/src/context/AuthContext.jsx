@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = useCallback(async () => {
     try {
-      const response = await fetch('https://proyectofinalprogbackendotero.onrender.com/api/sessions/current', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/sessions/current`, {
         credentials: 'include'
       })
       if (response.ok) {

@@ -18,9 +18,9 @@ const ItemListContainer = () => {
 
         const response = categoryId
           ? await fetch(
-              `https://proyectofinalprogbackendotero.onrender.com/api/products?limit=100&category=${categoryId}`
+              `${import.meta.env.VITE_BACKEND_URL}/api/products?limit=100&category=${categoryId}`
           )
-          : await fetch('https://proyectofinalprogbackendotero.onrender.com/api/products?limit=100')
+          : await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/products?limit=100`)
 
         if (!response.ok) {
           throw new Error('Network response was not ok')
@@ -29,7 +29,7 @@ const ItemListContainer = () => {
 
         // Process the data to include full URLs for thumbnails
         const processedData = data.payload.map((product) => {
-          const baseURL = 'https://proyectofinalprogbackendotero.onrender.com/static/img/'
+          const baseURL = `${import.meta.env.VITE_BACKEND_URL}/static/img/`
           return {
             ...product,
             thumbnails: product.thumbnails.map(

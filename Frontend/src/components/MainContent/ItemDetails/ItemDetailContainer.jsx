@@ -14,14 +14,14 @@ const ItemDetailContainer = () => {
         setLoading(true)
 
         const response = await fetch(
-          `https://proyectofinalprogbackendotero.onrender.com/api/products/${itemId}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/products/${itemId}`
         )
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }
         const data = await response.json()
         // Process the data to include full URLs for thumbnails
-        const baseURL = 'https://proyectofinalprogbackendotero.onrender.com/static/img/'
+        const baseURL = `${import.meta.env.VITE_BACKEND_URL}/static/img/`
         const processedProduct = {
           ...data,
           thumbnails: data.thumbnails.map(
