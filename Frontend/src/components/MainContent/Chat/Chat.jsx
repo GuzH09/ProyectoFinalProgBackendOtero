@@ -62,18 +62,32 @@ const Chat = () => {
   }
 
   return (
-        <div className="flex flex-column min-h-[80vh] gap-2 p-3 justify-between">
-            <h1 className='text-center rounded-md border-1 border-[#30363d] bg-[#21262d] p-3 text-sm text-white w-3/4 self-center'>¡Hola! Bienvenido al chat Premium.</h1>
+        <div className="flex flex-column max-h-[82vh] w-full gap-2 p-2">
+            <h1 className='text-center rounded-md border-1 border-[#30363d] bg-[#21262d] p-3 text-sm text-white w-5/6 self-center'>¡Hola! Bienvenido al chat Premium.</h1>
 
-            <ul className='w-2/4 self-center grid gap-1'>
-                {messages.map((msg, index) => (
-                    <li className={`rounded border-1 border-[#30363d] bg-[#21262d] p-3 text-sm text-white ${msg.user === profile.first_name + ' ' + profile.last_name ? 'justify-self-end' : 'justify-self-start'}`} key={index}>
-                        <strong className={`${msg.user === profile.first_name + ' ' + profile.last_name ? 'text-lime-500' : 'text-red-500'}`}>{msg.user}</strong>: {msg.message}
-                    </li>
-                ))}
+            <ul className='grow overflow-y-scroll w-full self-center'>
+              {messages.map((msg, index) => {
+                return msg.user === profile.first_name + ' ' + profile.last_name
+                  ? (
+                    <div className='flex w-full justify-end'>
+                      <li className='flex flex-col max-w-[66%] my-1 break-words rounded border-1 border-[#30363d] bg-[#21262d] py-1 px-2 text-sm text-white text-right' key={index}>
+                        <strong className='text-lime-500'>{msg.user}</strong>
+                        <p>{msg.message}</p>
+                      </li>
+                    </div>
+                    )
+                  : (
+                    <div className='flex w-full justify-start'>
+                      <li className='flex flex-col max-w-[66%] my-1 break-words rounded border-1 border-[#30363d] bg-[#21262d] py-1 px-2 text-sm text-white text-left' key={index}>
+                        <strong className='text-red-500'>{msg.user}</strong>
+                        <p>{msg.message}</p>
+                      </li>
+                    </div>
+                    )
+              })}
             </ul>
 
-            <div className='flex flex-row justify-end rounded-md border-1 border-[#30363d] bg-[#21262d] p-2 gap-3 text-sm text-white w-1/4 self-center'>
+            <div className='w-5/6 flex flex-row justify-end rounded-md border-1 border-[#30363d] bg-[#21262d] p-2 gap-3 text-sm text-white lg:w-1/4 self-center'>
                 <input
                     className='w-full rounded-md text-black'
                     type="text"

@@ -52,7 +52,7 @@ const ItemListContainer = () => {
   return (
     <>
       <BrandHeader />
-      <div className="lg:px-56 lg:py-3 bg-zinc-200 h-full">
+      <div className="bg-zinc-200 h-full lg:px-10 lg:py-3 xl:px-56">
         <div className="py-3">
           {categoryId
             ? (
