@@ -55,7 +55,7 @@ const LoginContainer = () => {
         <img src={'/images/logo.png'} className="h-full object-contain" />
         <h2 className="text-white">GuzH Tech Store</h2>
       </div>
-      <div className="rounded-md border-1 border-[#30363d] flex flex-col items-center py-2 gap-2 w-1/3">
+      <div className="w-5/6 rounded-md border-1 border-[#30363d] flex flex-col items-center py-2 gap-3 lg:w-1/3">
 
         <form className="flex flex-col items-center gap-3 w-full" onSubmit={handleSubmit}>
 
@@ -86,7 +86,7 @@ const LoginContainer = () => {
           <a href="/register" target="_self" className="text-white">Registrarse</a>
         </span>
 
-        <span className="rounded-md border-1 border-[#30363d] bg-[#21262d] p-1 text-sm w-2/6 text-center">
+        <span className="rounded-md border-1 border-[#30363d] bg-[#21262d] p-1 text-sm w-3/6 text-center">
           <button className="text-white" onClick={handleButtonClick}>Ingresar con Github</button>
         </span>
 
