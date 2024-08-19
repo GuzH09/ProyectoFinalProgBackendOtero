@@ -41,15 +41,18 @@ const ItemDetailContainer = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-row justify-center pt-5 pb-[48%]">
-        <div className="loader"></div>
+      // <div className="flex flex-row justify-center pt-5 pb-[48%]">
+      //   <div className="loader"></div>
+      // </div>
+      <div className="flex flex-row items-baseline justify-center pt-5 bg-white min-h-[50vh]">
+          <div className="loader"></div>
       </div>
     )
   }
 
   return (
     <>
-      <div className="pt-4 px-12 min-h-[81vh]">
+      <div className="min-h-[82vh] lg:pt-4 lg:px-12 lg:min-h-[81vh]">
         <ItemDetail {...product} />
       </div>
     </>

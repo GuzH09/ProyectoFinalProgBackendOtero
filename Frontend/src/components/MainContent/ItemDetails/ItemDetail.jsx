@@ -12,24 +12,19 @@ const ItemDetail = ({
 }) => {
   return (
     <article className="items-center flex flex-col">
-      <header>
-        <h2 className="font-bold">{title}</h2>
-      </header>
-
-      <picture className="h-72 w-42 p-3">
+      <picture className="w-full lg:h-72 lg:w-42 lg:p-3">
         <img className="h-full" src={thumbnails} alt={title} />
       </picture>
 
-      <section className="text-center">
-        <p>Categoria: {category}</p>
-        <p>Descripcion: {description}</p>
-        <p>Precio: ${price}</p>
-        <p>Stock disponible: {stock}</p>
-      </section>
+      <div className='flex flex-col gap-3 w-full pt-2 px-2'>
+        <h2 className="font-bold text-center">{title}</h2>
+        <p className='font-thin text-md'>{description}</p>
+        <p className='font-bold text-lg'>$ {price}</p>
+      </div>
 
-      <footer className="py-3">
+      <div className="py-3">
         <ItemCount initial={1} stock={stock} id={_id} title={title} />
-      </footer>
+      </div>
 
     </article>
   )

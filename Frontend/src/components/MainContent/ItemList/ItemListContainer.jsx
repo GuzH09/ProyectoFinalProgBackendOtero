@@ -52,8 +52,8 @@ const ItemListContainer = () => {
   return (
     <>
       <BrandHeader />
-      <div className="px-56 py-3 bg-zinc-200 h-full">
-        <div className="pb-3">
+      <div className="lg:px-56 lg:py-3 bg-zinc-200 h-full">
+        <div className="py-3">
           {categoryId
             ? (
             <h1 className="text-center font-medium">{`Productos por ${categoryId}`}</h1>
@@ -64,7 +64,7 @@ const ItemListContainer = () => {
         </div>
         {loading
           ? (
-          <div className="flex flex-row items-baseline justify-center pt-4 bg-white min-h-[50vh]">
+          <div className="flex flex-row items-baseline justify-center pt-14 bg-white min-h-[50vh]">
             <div className="loader"></div>
           </div>
             )
