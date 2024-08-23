@@ -62,7 +62,7 @@ const Chat = () => {
   }
 
   return (
-        <div className="flex flex-column max-h-[82vh] w-full gap-2 p-2">
+        <div className="flex flex-column max-h-[70vh] w-full gap-2 p-2">
             <h1 className='text-center rounded-md border-1 border-[#30363d] bg-[#21262d] p-3 text-sm text-white w-5/6 self-center'>¡Hola! Bienvenido al chat Premium.</h1>
 
             <ul className='grow overflow-y-scroll w-full self-center'>

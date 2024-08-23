@@ -60,7 +60,7 @@ const Profile = () => {
                             <h3 className="text-center">{profile.role}</h3>
                         </div>
 
-                        <span className="rounded-md border-1 border-[#30363d] bg-[#21262d] p-1 text-sm w-2/6 text-center">
+                        <span className="rounded-md border-1 border-red-700 bg-[#21262d] p-3 text-sm xl:w-2/6 text-center">
                             <button className="text-white" onClick={handleSubmit}>Cerrar sesion</button>
                         </span>
                     </div>

@@ -29,7 +29,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="pt-4 px-56 flex flex-column items-center min-h-[81vh]">
+    <div className="pt-4 px-2 xl:px-56 flex flex-column items-center min-h-[81vh]">
       {cart
         ? (
             cart.map((p) => (

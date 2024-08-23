@@ -132,7 +132,7 @@ const AdminManager = () => {
             {/* Form for adding new products */}
             <div className="flex flex-col items-center gap-3 w-full">
               {/* Inputs for new product */}
-                <div className="flex flex-col items-center gap-1 w-1/3">
+                <div className="flex flex-col items-center gap-1 w-full xl:w-1/3">
                     <label className="text-md">Nombre del Producto:</label>
                     <input
                         className="text-white font-thin rounded-md border-1 border-[#30363d] bg-[#21262d] w-3/4"
@@ -142,7 +142,7 @@ const AdminManager = () => {
                     />
                 </div>
 
-                <div className="flex flex-col items-center gap-1 w-1/3">
+                <div className="flex flex-col items-center gap-1 w-full xl:w-1/3">
                     <label className="text-md">Descripcion del Producto:</label>
                     <input
                         className="text-white font-thin rounded-md border-1 border-[#30363d] bg-[#21262d] w-3/4"
@@ -152,7 +152,7 @@ const AdminManager = () => {
                     />
                 </div>
 
-                <div className="flex flex-col items-center gap-1 w-1/3">
+                <div className="flex flex-col items-center gap-1 w-full xl:w-1/3">
                     <label className="text-md">Codigo:</label>
                     <input
                         className="text-white font-thin rounded-md border-1 border-[#30363d] bg-[#21262d] w-3/4"
@@ -162,7 +162,7 @@ const AdminManager = () => {
                     />
                 </div>
 
-                <div className="flex flex-col items-center gap-1 w-1/3">
+                <div className="flex flex-col items-center gap-1 w-full xl:w-1/3">
                     <label className="text-md">Precio:</label>
                     <input
                         className="text-white font-thin rounded-md border-1 border-[#30363d] bg-[#21262d] w-3/4"
@@ -172,7 +172,7 @@ const AdminManager = () => {
                     />
                 </div>
 
-                <div className="flex flex-col items-center gap-1 w-1/3">
+                <div className="flex flex-col items-center gap-1 w-full xl:w-1/3">
                     <label className="text-md">Stock:</label>
                     <input
                         className="text-white font-thin rounded-md border-1 border-[#30363d] bg-[#21262d] w-3/4"
@@ -182,7 +182,7 @@ const AdminManager = () => {
                     />
                 </div>
 
-                <div className="flex flex-col items-center gap-1 w-1/3">
+                <div className="flex flex-col items-center gap-1 w-full xl:w-1/3">
                     <label className="text-md">Categoria:</label>
                     <input
                         className="text-white font-thin rounded-md border-1 border-[#30363d] bg-[#21262d] w-3/4"
@@ -192,11 +192,11 @@ const AdminManager = () => {
                     />
                 </div>
 
-                <button onClick={addProduct} className="text-white rounded-md border-1 border-[#30363d] bg-[#21262d] p-1 text-sm w-1/6">Agregar Producto</button>
+                <button onClick={addProduct} className="text-white rounded-md border-1 border-[#30363d] bg-[#21262d] p-3 xl:p-1 text-sm xl:w-1/6">Agregar Producto</button>
             </div>
 
             {/* List of products */}
-            <div className="bg-white w-2/3 pt-4 grid grid-cols-4 gap-2">
+            <div className="bg-white xl:w-2/3 pt-4 grid xl:grid-cols-4 gap-2">
                 {loading
                   ? (
                       <div className="flex flex-row items-baseline justify-center pt-4 bg-white min-h-[50vh]">

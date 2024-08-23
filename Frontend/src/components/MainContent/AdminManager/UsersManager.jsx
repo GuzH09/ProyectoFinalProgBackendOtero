@@ -84,7 +84,7 @@ const UsersManager = () => {
   return (
         <div className="flex flex-column min-h-[80vh] p-3 items-center">
             {/* List of products */}
-            <div className="bg-white w-2/3 pt-4 grid grid-cols-4 gap-2">
+            <div className="bg-white xl:w-2/3 pt-4 grid xl:grid-cols-4 gap-2">
               {loading
                 ? (
                     <div className="flex flex-row items-baseline justify-center pt-4 bg-white min-h-[50vh]">
