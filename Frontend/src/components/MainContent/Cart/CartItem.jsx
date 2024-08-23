@@ -5,7 +5,7 @@ const CartItem = ({ product, quantity }) => {
   const { handleOnRemove } = useContext(CartContext)
 
   return (
-    <article className="flex flex-col w-full rounded bg-blue-50 p-4 my-2 text-sm font-medium text-blue-700 ring-1 ring-blue-600 xl:flex-row xl:justify-between xl:gap-3 xl:items-center">
+    <article className="flex flex-col w-full sm:w-3/4 rounded bg-blue-50 p-4 my-2 text-sm font-medium text-blue-700 ring-1 ring-blue-600 xl:flex-row xl:justify-between xl:gap-3 xl:items-center">
       <div className="flex items-center flex-shrink-0 mb-4">
         <picture className="h-20 w-20 mr-4">
           <img

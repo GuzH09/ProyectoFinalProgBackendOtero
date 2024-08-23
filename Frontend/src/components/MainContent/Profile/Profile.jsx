@@ -30,38 +30,38 @@ const Profile = () => {
         <>
             <div className="pt-4 px-12 min-h-[81vh]">
                 <div className="flex justify-center">
-                    <img src={'/images/profile_avatar.png'} className="h-48 w-48 object-contain" />
+                  <img src={'/images/profile_avatar.png'} className="h-48 w-48 object-contain" />
                 </div>
                 {profile
                   ? (
                     <div className="flex justify-center flex-col items-center gap-3">
                         <div>
-                            <h2 className="text-center">First Name:</h2>
-                            <h3 className="text-center">{profile.first_name}</h3>
+                          <h2 className="text-center">First Name:</h2>
+                          <h3 className="text-center">{profile.first_name}</h3>
                         </div>
 
                         <div>
-                            <h2 className="text-center">Last Name:</h2>
-                            <h3 className="text-center">{profile.last_name}</h3>
+                          <h2 className="text-center">Last Name:</h2>
+                          <h3 className="text-center">{profile.last_name}</h3>
                         </div>
 
                         <div>
-                            <h2 className="text-center">Email:</h2>
-                            <h3 className="text-center">{profile.email}</h3>
+                          <h2 className="text-center">Email:</h2>
+                          <h3 className="text-center">{profile.email}</h3>
                         </div>
 
                         <div>
-                            <h2 className="text-center">Age:</h2>
-                            <h3 className="text-center">{profile.age}</h3>
+                          <h2 className="text-center">Age:</h2>
+                          <h3 className="text-center">{profile.age}</h3>
                         </div>
 
                         <div>
-                            <h2 className="text-center">Role:</h2>
-                            <h3 className="text-center">{profile.role}</h3>
+                          <h2 className="text-center">Role:</h2>
+                          <h3 className="text-center">{profile.role}</h3>
                         </div>
 
-                        <span className="rounded-md border-1 border-red-700 bg-[#21262d] p-3 text-sm xl:w-2/6 text-center">
-                            <button className="text-white" onClick={handleSubmit}>Cerrar sesion</button>
+                        <span className="rounded-md border-1 border-red-700 bg-[#21262d] px-2 py-2 text-sm xl:p-1 text-center">
+                          <button className="text-white" onClick={handleSubmit}>Cerrar sesion</button>
                         </span>
                     </div>
                     )

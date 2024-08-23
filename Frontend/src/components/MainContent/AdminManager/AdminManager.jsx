@@ -196,7 +196,7 @@ const AdminManager = () => {
             </div>
 
             {/* List of products */}
-            <div className="bg-white xl:w-2/3 pt-4 grid xl:grid-cols-4 gap-2">
+            <div className="bg-white xl:w-2/3 pt-4 grid sm:grid-cols-2 xl:grid-cols-4 gap-2">
                 {loading
                   ? (
                       <div className="flex flex-row items-baseline justify-center pt-4 bg-white min-h-[50vh]">
